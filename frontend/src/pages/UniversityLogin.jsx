@@ -1,0 +1,72 @@
+import { useNavigate } from 'react-router-dom'
+
+function InputField({ label, type, placeholder }) {
+	return (
+		<label className="flex w-full flex-col gap-2 text-sm font-semibold text-[#204060]">
+			<span className="sr-only">{label}</span>
+			<div className="flex items-center gap-3 rounded-full bg-[#7C9885]/40 px-4 py-3">
+				<span
+					className="h-8 w-8 rounded-full bg-[#204060]"
+					aria-hidden="true"
+				/>
+				<input
+					type={type}
+					placeholder={placeholder}
+					className="w-full bg-transparent text-base text-[#0E1D2D] placeholder:text-[#204060]/60 focus:outline-none"
+				/>
+			</div>
+		</label>
+	)
+}
+
+export default function UniversityLogin() {
+	const navigate = useNavigate()
+	return (
+		<main className="relative min-h-screen overflow-hidden bg-[#FFF4DE]">
+			{/* Calm layered hills for the university login background. */}
+			<div className="pointer-events-none absolute inset-0">
+				<div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(190,212,197,0.6),_transparent_55%)]" />
+				<div className="absolute -bottom-28 left-0 h-64 w-full rounded-[100%] bg-[#BED4C5]/70" />
+				<div className="absolute -bottom-40 left-0 h-72 w-full rounded-[100%] bg-[#A7D0D6]/70" />
+				<div className="absolute -bottom-52 left-0 h-80 w-full rounded-[100%] bg-[#6F9FA5]/40" />
+			</div>
+
+			<div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
+				<div className="w-full max-w-sm rounded-[32px] bg-[#FEDC97] px-6 py-8 shadow-[0_30px_60px_-40px_rgba(14,29,45,0.8)] sm:px-8">
+					<h1 className="text-center text-sm font-semibold uppercase tracking-[0.25em] text-[#204060]">
+						University Login
+					</h1>
+
+					<div className="mt-6 flex flex-col gap-4">
+						<InputField label="Email" type="email" placeholder="Email" />
+						<p className="text-right text-xs font-medium text-[#204060]/70">
+							<button type="button" className="hover:text-[#204060]">
+								Forgot Password?
+							</button>
+						</p>
+						<InputField label="Password" type="password" placeholder="Password" />
+					</div>
+
+					<div className="mt-6 flex flex-col items-center gap-3">
+						<button
+							type="button"
+							className="w-full rounded-full bg-[#6F9FA5] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#FFF4DE] transition hover:bg-[#7C9885] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#204060]"
+						>
+							Login
+						</button>
+						<span className="text-xs font-semibold uppercase tracking-[0.35em] text-[#204060]/60">
+							or
+						</span>
+						<button
+							type="button"
+							onClick={() => navigate('/university-signup')}
+							className="w-full rounded-full border-2 border-[#6F9FA5] bg-[#FFF4DE] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#204060] transition hover:bg-[#FEDC97] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#204060]"
+						>
+							Sign Up
+						</button>
+					</div>
+				</div>
+			</div>
+		</main>
+	)
+}

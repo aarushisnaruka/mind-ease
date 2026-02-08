@@ -1,19 +1,65 @@
-/* src/index.css */
-
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
 @import "tailwindcss";
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans;
+    @apply bg-[#FFF4DE] text-[#0E1D2D];
     margin: 0;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Manrope', 'Segoe UI', sans-serif;
   }
 }
 
-/* Optional: your custom calming theme overrides */
-@layer utilities {
-  .calm-bg { @apply bg-gradient-to-br from-indigo-50 via-cyan-50 to-teal-50; }
-  .primary-btn { @apply bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition shadow-md; }
-  .card { @apply bg-white rounded-2xl shadow-lg p-6 border border-indigo-100; }
+@keyframes scroll-up {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
 
+@keyframes scroll-down {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes wave-rise {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@layer utilities {
+  .animate-scroll-up {
+    animation: scroll-up var(--scroll-duration, 44s) linear infinite;
+    animation-delay: var(--scroll-delay, 0s);
+    will-change: transform;
+  }
+
+  .animate-scroll-down {
+    animation: scroll-down var(--scroll-duration, 44s) linear infinite;
+    animation-delay: var(--scroll-delay, 0s);
+    will-change: transform;
+  }
+
+  .wave-rise {
+    animation: wave-rise 1.8s ease-out 1.5s forwards;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll-up,
+  .animate-scroll-down,
+  .wave-rise {
+    animation: none;
+    transform: none;
+  }
 }
