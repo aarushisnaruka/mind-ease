@@ -33,6 +33,28 @@ export default function UniversityLogin() {
 
 			<div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
 				<div className="w-full max-w-sm rounded-[32px] bg-[#FEDC97] px-6 py-8 shadow-[0_30px_60px_-40px_rgba(14,29,45,0.8)] sm:px-8">
+					<button
+						type="button"
+						onClick={() => navigate('/')}
+						className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#204060] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#FFF4DE] transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#204060]"
+						aria-label="Back to welcome"
+					>
+						<svg
+							className="h-4 w-4"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							aria-hidden="true"
+						>
+							<path d="M3 10.5L12 3l9 7.5" />
+							<path d="M5 10v10h14V10" />
+							<path d="M9 20v-6h6v6" />
+						</svg>
+						Home
+					</button>
 					<h1 className="text-center text-sm font-semibold uppercase tracking-[0.25em] text-[#204060]">
 						University Login
 					</h1>
