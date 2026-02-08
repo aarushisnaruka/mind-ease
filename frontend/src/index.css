@@ -63,3 +63,25 @@
     transform: none;
   }
 }
+
+/* Visible scroll styling for dashboard panels. */
+.scroll-shadow {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #204060 #FFF4DE;
+}
+
+.scroll-shadow::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-shadow::-webkit-scrollbar-track {
+  background: #FFF4DE;
+  border-radius: 999px;
+}
+
+.scroll-shadow::-webkit-scrollbar-thumb {
+  background-color: #204060;
+  border-radius: 999px;
+  border: 2px solid #FFF4DE;
+}
