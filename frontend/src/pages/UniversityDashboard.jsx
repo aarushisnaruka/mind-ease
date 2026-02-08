@@ -23,7 +23,7 @@ const actionCards = [
 	{ label: 'University Stats', icon: '📊' },
 ]
 
-function Sidebar({ onLogout }) {
+function Sidebar({ onLogout, onProfile, onContact }) {
 	return (
 		<aside className="flex h-screen w-56 flex-col gap-6 bg-[#204060] px-6 py-8 text-[#FFF4DE]">
 			<nav className="flex flex-col gap-2 text-sm font-medium">
@@ -31,7 +31,15 @@ function Sidebar({ onLogout }) {
 					<button
 						key={item}
 						type="button"
-						onClick={item === 'Log out' ? onLogout : undefined}
+						onClick={
+							item === 'Log out'
+								? onLogout
+								: item === 'Profile'
+									? onProfile
+									: item === 'Contact Us'
+										? onContact
+									: undefined
+						}
 						className="rounded-xl px-3 py-2 text-left transition hover:bg-[#0E1D2D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFF4DE]"
 					>
 						{item}
@@ -72,11 +80,11 @@ function DashboardCard({ children, className = '' }) {
 	return <div className={`h-full rounded-3xl ${className}`}>{children}</div>
 }
 
-function ActionCard({ label, icon }) {
+function ActionCard({ label, icon, onClick }) {
 	return (
 		<button
 			type="button"
-			onClick={() => console.log(label)}
+			onClick={onClick ?? (() => console.log(label))}
 			className="flex h-full w-full items-center justify-between gap-4 rounded-3xl bg-[#BED4C5] px-5 py-6 text-[#0E1D2D] shadow-[0_12px_24px_-18px_rgba(14,29,45,0.5)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-18px_rgba(14,29,45,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#204060]"
 		>
 			<span className="text-sm font-semibold">{label}</span>
@@ -111,7 +119,11 @@ export default function UniversityDashboard() {
 	return (
 		<div className="min-h-screen bg-[#FFF4DE]">
 			<div className="flex min-h-screen">
-				<Sidebar onLogout={() => navigate('/')} />
+				<Sidebar
+					onLogout={() => navigate('/')}
+					onProfile={() => navigate('/university-profile')}
+					onContact={() => navigate('/contact-us2')}
+				/>
 				<main className="relative flex min-h-screen flex-1 flex-col px-8 py-8">
 					<div className="relative flex flex-1 flex-col">
 						<DashboardHeader
@@ -131,11 +143,19 @@ export default function UniversityDashboard() {
 								</p>
 							</DashboardCard>
 
-							<div className="grid gap-4">
-								{actionCards.map((card) => (
-									<ActionCard key={card.label} {...card} />
-								))}
-							</div>
+								<div className="grid gap-4">
+									{actionCards.map((card) => (
+										<ActionCard
+											key={card.label}
+											{...card}
+											onClick={
+												card.label === 'University Stats'
+													? () => navigate('/university-stats')
+													: undefined
+											}
+										/>
+									))}
+								</div>
 						</div>
 						</div>
 
