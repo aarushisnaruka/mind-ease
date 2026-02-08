@@ -81,6 +81,8 @@ export default function Journal() {
 		<div className="min-h-screen bg-[#FFF4DE]">
 			<div className="flex min-h-screen">
 				<Sidebar
+					onHome={() => navigate('/student-dashboard')}
+					onProfile={() => navigate('/student-profile')}
 					onLogout={() => navigate('/')}
 					onContact={() => navigate('/contact-us')}
 				/>

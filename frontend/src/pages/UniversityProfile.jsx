@@ -51,6 +51,7 @@ export default function UniversityProfile() {
 		<div className="min-h-screen bg-[#FFF4DE]">
 			<div className="flex min-h-screen">
 				<Sidebar
+					onHome={() => navigate('/university-dashboard')}
 					onLogout={() => navigate('/')}
 					onContact={() => navigate('/contact-us2')}
 				/>

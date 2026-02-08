@@ -24,7 +24,12 @@ export default function ContactUs() {
 	return (
 		<div className="min-h-screen bg-[#FFF4DE]">
 			<div className="flex min-h-screen">
-				<Sidebar onLogout={() => navigate('/')} />
+				<Sidebar
+					onHome={() => navigate('/student-dashboard')}
+					onProfile={() => navigate('/student-profile')}
+					onLogout={() => navigate('/')}
+					onContact={() => navigate('/contact-us')}
+				/>
 				<main className="flex flex-1 flex-col px-6 py-6">
 					<div className="rounded-3xl bg-[#BED4C5] px-6 py-4 shadow-[0_14px_26px_-20px_rgba(14,29,45,0.7)]">
 						<h1 className="text-2xl font-semibold text-[#0E1D2D]">

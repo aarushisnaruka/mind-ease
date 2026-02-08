@@ -143,8 +143,16 @@ export default function StudentDashboard() {
 								</DashboardCard>
 
 								<div className="relative grid gap-4 sm:grid-cols-2">
-									<ActionCard label="Take Quiz" icon="🧠" />
-									<ActionCard label="Regulate" icon="🧘" />
+									<ActionCard
+										label="Take Quiz"
+										icon="🧠"
+										onClick={() => navigate('/quiz')}
+									/>
+									<ActionCard
+										label="Regulate"
+										icon="🧘"
+										onClick={() => navigate('/breathing-exercises')}
+									/>
 									<ActionCard
 										label="Personal Stats"
 										icon="📊"

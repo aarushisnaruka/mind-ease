@@ -72,6 +72,7 @@ export default function DeveloperLogin() {
 					<div className="mt-6 flex flex-col items-center gap-3">
 						<button
 							type="button"
+							onClick={() => navigate('/developer-dashboard')}
 							className="w-full rounded-full bg-[#6F9FA5] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#FFF4DE] transition hover:bg-[#7C9885] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#204060]"
 						>
 							Login

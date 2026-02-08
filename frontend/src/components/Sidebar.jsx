@@ -2,7 +2,7 @@ import { GraduationCap } from 'lucide-react'
 
 const navItems = ['Home', 'Profile', 'Contact Us', 'Logout']
 
-export default function Sidebar({ onLogout, onContact }) {
+export default function Sidebar({ onLogout, onContact, onHome, onProfile }) {
 	return (
 		<aside className="flex h-screen w-56 flex-col gap-6 bg-[#204060] px-6 py-8 text-[#FFF4DE]">
 			<div className="flex flex-col items-center gap-3">
@@ -23,7 +23,11 @@ export default function Sidebar({ onLogout, onContact }) {
 								? onLogout
 								: item === 'Contact Us'
 									? onContact
-									: undefined
+									: item === 'Home'
+										? onHome
+										: item === 'Profile'
+											? onProfile
+											: undefined
 						}
 						className="rounded-xl px-3 py-2 text-left transition hover:bg-[#0E1D2D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFF4DE]"
 					>

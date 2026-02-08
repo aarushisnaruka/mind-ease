@@ -1,10 +1,15 @@
 import { Route, Routes } from 'react-router-dom'
+import BreathingExercise from './pages/BreathingExercise'
 import ContactUs from './pages/ContactUs'
 import ContactUs2 from './pages/ContactUs2'
 import DeveloperLogin from './pages/DeveloperLogin'
+import DeveloperDashboard from './pages/DeveloperDashboard'
 import DeveloperSignUp from './pages/DeveloperSignUp'
+import GenerateQuiz from './pages/GenerateQuiz'
 import Journal from './pages/Journal'
 import PersonalStats from './pages/PersonalStats'
+import PreviewQuiz from './pages/PreviewQuiz'
+import QuizPage from './pages/QuizPage'
 import RoleChoice from './pages/RoleChoice'
 import StudentDashboard from './pages/StudentDashboard'
 import StudentLogin from './pages/StudentLogin'
@@ -21,6 +26,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Welcome />} />
+      <Route path="/breathing-exercises" element={<BreathingExercise />} />
       <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/contact-us2" element={<ContactUs2 />} />
       <Route path="/role-choice" element={<RoleChoice />} />
@@ -34,9 +40,13 @@ function App() {
       <Route path="/university-stats" element={<UniversityStats />} />
       <Route path="/university-signup" element={<UniversitySignUp />} />
       <Route path="/developer-login" element={<DeveloperLogin />} />
+      <Route path="/developer-dashboard" element={<DeveloperDashboard />} />
       <Route path="/developer-signup" element={<DeveloperSignUp />} />
+      <Route path="/generate-quiz" element={<GenerateQuiz />} />
       <Route path="/journal" element={<Journal />} />
       <Route path="/personal-stats" element={<PersonalStats />} />
+      <Route path="/preview-quiz" element={<PreviewQuiz />} />
+      <Route path="/quiz" element={<QuizPage />} />
     </Routes>
   )
 }

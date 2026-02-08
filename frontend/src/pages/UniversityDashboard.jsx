@@ -148,11 +148,13 @@ export default function UniversityDashboard() {
 										<ActionCard
 											key={card.label}
 											{...card}
-											onClick={
-												card.label === 'University Stats'
-													? () => navigate('/university-stats')
-													: undefined
-											}
+													onClick={
+														card.label === 'University Stats'
+															? () => navigate('/university-stats')
+															: card.label === 'Preview Quiz'
+																? () => navigate('/preview-quiz')
+																: undefined
+													}
 										/>
 									))}
 								</div>
