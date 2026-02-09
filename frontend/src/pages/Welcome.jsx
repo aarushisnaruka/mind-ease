@@ -3,17 +3,44 @@ const columns = [
 	{ direction: 'down', duration: 98, delay: 2 },
 	{ direction: 'up', duration: 100, delay: 1 },
 	{ direction: 'down', duration: 102, delay: 0 },
-	{ direction: 'up', duration: 99, delay: 3 },
+	{ direction: 'up', duration: 99, delay: 2 },
 	{ direction: 'down', duration: 100, delay: 1 },
-	{ direction: 'up', duration: 104, delay: 2 },
+	{ direction: 'up', duration: 104, delay: 0 },
+	{ direction: 'down', duration: 101, delay: 2 },
+	{ direction: 'up', duration: 103, delay: 1 },
+	{ direction: 'down', duration: 99, delay: 0 },
 ]
 
-function CardColumn({ direction, duration, delay }) {
+// Seeded shuffle function for consistent but different randomization per column
+function shuffleWithSeed(array, seed) {
+	const shuffled = [...array]
+	let currentIndex = shuffled.length
+	let random = seed
+	
+	// Simple seeded random number generator
+	const seededRandom = () => {
+		random = (random * 9301 + 49297) % 233280
+		return random / 233280
+	}
+	
+	while (currentIndex !== 0) {
+		const randomIndex = Math.floor(seededRandom() * currentIndex)
+		currentIndex--
+		;[shuffled[currentIndex], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[currentIndex]]
+	}
+	
+	return shuffled
+}
+
+function CardColumn({ direction, duration, delay, columnIndex }) {
 	// Create array of all 36 emotion images
-	const emotions = Array.from({ length: 36 }).map((_, index) => ({
+	const allEmotions = Array.from({ length: 36 }).map((_, index) => ({
 		id: index + 1,
 		src: `/emoCards/e${index + 1}.png`,
 	}))
+	
+	// Shuffle emotions uniquely for each column based on columnIndex
+	const emotions = shuffleWithSeed(allEmotions, columnIndex * 1000 + 42)
 
 	return (
 		<div className="relative h-full overflow-hidden">
@@ -47,13 +74,14 @@ function CardColumn({ direction, duration, delay }) {
 
 function AnimatedBackground() {
 	return (
-		<div className="absolute inset-0 grid grid-cols-4 gap-6 px-6 py-10 md:grid-cols-7 pointer-events-none">
+		<div className="absolute inset-0 grid grid-cols-5 gap-6 px-6 py-10 md:grid-cols-10 pointer-events-none">
 			{columns.map((column, index) => (
 				<CardColumn
 					key={`${column.direction}-${index}`}
 					direction={column.direction}
 					duration={column.duration}
 					delay={column.delay}
+					columnIndex={index}
 				/>
 			))}
 		</div>
@@ -83,17 +111,19 @@ function WaveSection() {
 					<p className="text-sm uppercase tracking-[0.35em] text-[#FEDC97]">
 						MindEase
 					</p>
-					<h1 className="mt-4 text-5xl font-semibold leading-tight md:text-6xl">
-						Welcome
-					</h1>
-					<p className="mt-5 text-lg text-[#FFF4DE]/90 md:text-xl">
-						You are not alone. Let us take this step together, gently and at
-						your pace.
+					<p className="mt-6 text-lg leading-relaxed text-[#FFF4DE]/95 md:text-xl md:leading-relaxed">
+						We know university life can feel overwhelming at times. We're here to help students pause, reflect, and better understand their mental well-being through short, thoughtful quizzes.
+					</p>
+					<p className="mt-4 text-lg leading-relaxed text-[#FFF4DE]/95 md:text-xl md:leading-relaxed">
+						At the same time, we help universities see the bigger picture — so support can be offered with care, not judgment.
+					</p>
+					<p className="mt-6 text-xl font-medium italic leading-relaxed text-[#FEDC97]/90 md:text-xl">
+						You are a mountain; thoughts are clouds. They pass — you remain.
 					</p>
 					<button
 						type="button"
 						onClick={() => navigate('/role-choice')}
-						className="mt-8 rounded-full bg-[#FEDC97] px-8 py-3 text-base font-semibold text-[#0E1D2D] shadow-[0_12px_30px_-18px_rgba(14,29,45,0.9)] transition hover:bg-[#FFF4DE] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FEDC97]"
+						className="mt-10 w-[180px] h-[52px] text-lg font-semibold bg-[#FEDC97] text-[#0E1D2D] rounded-full border-none cursor-pointer transition-all duration-[400ms] ease-in-out shadow-[0_8px_20px_-6px_rgba(14,29,45,0.4)] hover:-translate-y-[10px] hover:shadow-[0_10px_0_-4px_rgba(254,220,151,0.6),0_20px_0_-8px_rgba(32,64,96,0.5),0_25px_15px_-8px_rgba(32,64,96,0.4)] active:-translate-y-[4px] active:shadow-[0_4px_0_-2px_rgba(254,220,151,0.7),0_10px_0_-6px_rgba(32,64,96,0.6),0_15px_12px_-6px_rgba(32,64,96,0.5)] active:transition-all active:duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FEDC97]"
 					>
 						Get Started
 					</button>

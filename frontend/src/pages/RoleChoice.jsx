@@ -1,67 +1,92 @@
 import { useNavigate } from 'react-router-dom'
 
-function LoginOptionCard({ label, icon, onSelect }) {
+function LoginOptionCard({ title, iconSrc, onSelect }) {
 	return (
 		<button
 			type="button"
 			onClick={onSelect}
-			className="group flex w-full flex-col items-center gap-3 rounded-3xl border-2 border-[#204060] bg-[#FEDC97] px-6 py-5 text-center text-[#0E1D2D] shadow-[0_12px_24px_-18px_rgba(14,29,45,0.6)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-18px_rgba(14,29,45,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#204060]"
+			className="group flex w-full flex-col items-center justify-center rounded-3xl border-4 border-[#204060]/90 bg-[#FEDC97]/20 p-8 shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#204060] md:p-10"
 		>
-			<span className="text-2xl" aria-hidden="true">
-				{icon}
-			</span>
-			<span className="text-sm font-semibold uppercase tracking-[0.12em]">
-				{label}
-			</span>
+			<div className="mb-6 flex h-20 w-20 items-center justify-center">
+				<img
+					src={iconSrc}
+					alt={title}
+					className="h-full w-full object-contain"
+				/>
+			</div>
+			<h2 className="whitespace-pre-line text-center text-2xl font-bold text-[#204060] md:text-3xl">
+				{title}
+			</h2>
 		</button>
 	)
 }
 
 export default function RoleChoice() {
 	const navigate = useNavigate()
+	
 	const options = [
 		{
-			label: 'Student Login',
-			icon: '🎓',
+			title: 'STUDENT\nLOGIN',
+			iconSrc: '/RoleChoiceImg/student_icon.png',
 			onSelect: () => navigate('/student-login'),
 		},
 		{
-			label: 'University Login',
-			icon: '🏛️',
+			title: 'UNIVERSITY\nLOGIN',
+			iconSrc: '/RoleChoiceImg/uni_icon.png',
 			onSelect: () => navigate('/university-login'),
 		},
 		{
-			label: 'Developer Login',
-			icon: '🧩',
+			title: 'DEVELOPER\nLOGIN',
+			iconSrc: '/RoleChoiceImg/dev_icon.png',
 			onSelect: () => navigate('/developer-login'),
 		},
 	]
 
 	return (
-		<main className="relative min-h-screen overflow-hidden bg-[#FFF4DE]">
-			{/* Layered hills for a calm background. */}
-			<div className="pointer-events-none absolute inset-0">
-				<div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(167,208,214,0.6),_transparent_55%)]" />
-				<div className="absolute -bottom-28 left-0 h-64 w-full rounded-[100%] bg-[#BED4C5]/70" />
-				<div className="absolute -bottom-40 left-0 h-72 w-full rounded-[100%] bg-[#A7D0D6]/70" />
-				<div className="absolute -bottom-52 left-0 h-80 w-full rounded-[100%] bg-[#6F9FA5]/40" />
-			</div>
+		<main className="relative min-h-screen overflow-hidden">
+			{/* Fixed background image */}
+			<div className="fixed inset-0 -z-10 bg-[url('/RoleChoiceImg/role_choice_bg.png')] bg-cover bg-center bg-no-repeat" />
+			
+			{/* Subtle overlay for better readability */}
+			<div className="fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-black/5 to-black/10" />
 
-			<div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
-				<div className="w-full max-w-3xl rounded-[32px] border border-[#204060]/20 bg-[#FFF4DE]/90 p-6 shadow-[0_30px_60px_-40px_rgba(14,29,45,0.8)] backdrop-blur-sm sm:p-10">
-					<div className="mx-auto w-full max-w-md rounded-2xl bg-[#204060] px-6 py-3 text-center">
-						<h1 className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FFF4DE]">
-							Choose How To Login
-						</h1>
-					</div>
+			<div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 py-12">
+				{/* Header */}
+				<div className="mb-16 w-full rounded-3xl bg-[#204060] px-8 py-6 text-center shadow-xl">
+					<h1 className="text-4xl font-bold uppercase tracking-wide text-white md:text-4xl">
+						Choose your Role!
+					</h1>
+				</div>
 
-					<div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
-						<LoginOptionCard {...options[0]} />
-						<LoginOptionCard {...options[1]} />
-					</div>
-					<div className="mt-6 flex justify-center">
-						<div className="w-full max-w-xs">
-							<LoginOptionCard {...options[2]} />
+				{/* Asymmetric Cards Layout - Triangle/Pyramid arrangement */}
+				<div className="relative w-full max-w-6xl">
+					{/* Desktop: 3-column grid with asymmetric placement | Mobile: vertical stack */}
+					<div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-x-12 md:gap-y-8">
+						{/* Student - Left (col 1, row 1) */}
+						<div className="md:col-start-1 md:row-start-1">
+							<LoginOptionCard
+								title={options[0].title}
+								iconSrc={options[0].iconSrc}
+								onSelect={options[0].onSelect}
+							/>
+						</div>
+
+						{/* University - Right (col 3, row 1) */}
+						<div className="md:col-start-3 md:row-start-1">
+							<LoginOptionCard
+								title={options[1].title}
+								iconSrc={options[1].iconSrc}
+								onSelect={options[1].onSelect}
+							/>
+						</div>
+
+						{/* Developer - Center Bottom (col 2, row 2) - creates triangle */}
+						<div className="md:col-start-2 md:row-start-2">
+							<LoginOptionCard
+								title={options[2].title}
+								iconSrc={options[2].iconSrc}
+								onSelect={options[2].onSelect}
+							/>
 						</div>
 					</div>
 				</div>
