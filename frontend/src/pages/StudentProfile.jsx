@@ -51,8 +51,8 @@ export default function StudentProfile() {
 					onLogout={() => navigate('/')}
 					onContact={() => navigate('/contact-us')}
 				/>
-				<main className="flex flex-1 items-start justify-center px-6 py-8">
-					<div className="w-full max-w-3xl space-y-6">
+				<main className="flex flex-1 items-start justify-center px-8 py-12">
+					<div className="w-full max-w-5xl space-y-8">
 						<ProfileHeader
 							variant="student"
 							name={values.name}

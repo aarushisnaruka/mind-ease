@@ -227,7 +227,12 @@ export default function UniversityDashboard() {
 											className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-[#204060] text-[#FFF4DE] shadow-[0_10px_18px_-12px_rgba(14,29,45,0.7)] transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#204060]"
 											aria-label="Post announcement"
 										>
-											<span aria-hidden="true">📣</span>
+											<img
+												src="/Dash/paper-plane.png"
+												alt=""
+												className="h-4 w-4"
+												aria-hidden="true"
+											/>
 										</button>
 									</div>
 								</div>

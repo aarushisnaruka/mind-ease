@@ -5,7 +5,7 @@ import ProfileForm from '../components/ProfileForm'
 import Sidebar from '../components/Sidebar'
 
 const initialValues = {
-	uniId: 'Uni ID',
+	uniId: 'ME1003',
 	universityName: 'XYZ',
 	cityState: 'City, State',
 	email: 'abcdeghij@gmail.com',
@@ -25,16 +25,16 @@ export default function UniversityProfile() {
 		setValues((current) => ({ ...current, [name]: value }))
 	}
 
-	const handleBranchChange = (index, value) => {
-		setBranches((current) =>
-			current.map((branch, branchIndex) =>
-				branchIndex === index ? value : branch,
-			),
-		)
+	const handleAddBranch = (branchName) => {
+		const trimmed = branchName.trim()
+		if (!trimmed) return
+		setBranches((current) => [...current, trimmed])
 	}
 
-	const handleAddBranch = () => {
-		setBranches((current) => [...current, ''])
+	const handleDeleteBranch = (index) => {
+		setBranches((current) =>
+			current.filter((_, branchIndex) => branchIndex !== index),
+		)
 	}
 
 	const handleSave = () => {
@@ -57,8 +57,8 @@ export default function UniversityProfile() {
 					onLogout={() => navigate('/')}
 					onContact={() => navigate('/contact-us2')}
 				/>
-				<main className="flex flex-1 items-start justify-center px-6 py-8">
-					<div className="w-full max-w-4xl space-y-6">
+				<main className="flex flex-1 items-start justify-center px-8 py-10">
+					<div className="w-full max-w-5xl space-y-8">
 						<ProfileHeader
 							variant="university"
 							uniId={values.uniId}
@@ -71,8 +71,8 @@ export default function UniversityProfile() {
 							branches={branches}
 							isEditing={isEditing}
 							onChange={handleChange}
-							onBranchChange={handleBranchChange}
 							onAddBranch={handleAddBranch}
+							onDeleteBranch={handleDeleteBranch}
 							onEdit={() => setIsEditing(true)}
 							onSave={handleSave}
 							onDelete={handleDelete}
