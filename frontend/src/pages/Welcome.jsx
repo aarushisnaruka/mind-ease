@@ -1,29 +1,23 @@
-const CARD_COLORS = [
-	'bg-[#6F9FA5]/40',
-	'bg-[#BED4C5]/50',
-	'bg-[#A7D0D6]/45',
-	'bg-[#7C9885]/45',
-	'bg-[#FEDC97]/35',
-	'bg-[#FFF4DE]/35',
-]
-
 const columns = [
-	{ direction: 'up', duration: 42, delay: 0 },
-	{ direction: 'down', duration: 48, delay: 2 },
-	{ direction: 'up', duration: 44, delay: 1 },
-	{ direction: 'down', duration: 50, delay: 0 },
-	{ direction: 'up', duration: 46, delay: 3 },
+	{ direction: 'up', duration: 104, delay: 0 },
+	{ direction: 'down', duration: 98, delay: 2 },
+	{ direction: 'up', duration: 100, delay: 1 },
+	{ direction: 'down', duration: 102, delay: 0 },
+	{ direction: 'up', duration: 99, delay: 3 },
+	{ direction: 'down', duration: 100, delay: 1 },
+	{ direction: 'up', duration: 104, delay: 2 },
 ]
 
 function CardColumn({ direction, duration, delay }) {
-	const cards = Array.from({ length: 6 }).map((_, index) => ({
-		id: index,
-		color: CARD_COLORS[index % CARD_COLORS.length],
+	// Create array of all 36 emotion images
+	const emotions = Array.from({ length: 36 }).map((_, index) => ({
+		id: index + 1,
+		src: `/emoCards/e${index + 1}.png`,
 	}))
 
 	return (
 		<div className="relative h-full overflow-hidden">
-			{/* Duplicate the card stack so the scroll loop is seamless. */}
+			{/* Duplicate the emotion cards for seamless infinite scroll */}
 			<div
 				className={`flex flex-col gap-4 ${
 					direction === 'up' ? 'animate-scroll-up' : 'animate-scroll-down'
@@ -33,18 +27,17 @@ function CardColumn({ direction, duration, delay }) {
 					'--scroll-delay': `${delay}s`,
 				}}
 			>
-				{[...cards, ...cards].map((card, index) => (
+				{[...emotions, ...emotions].map((emotion, index) => (
 					<div
-						key={`${direction}-${card.id}-${index}`}
-						className={`rounded-3xl border border-[#FFF4DE]/40 ${card.color} p-4 shadow-[0_12px_24px_-18px_rgba(14,29,45,0.6)] backdrop-blur-sm`}
+						key={`${direction}-${emotion.id}-${index}`}
+						className="rounded-3xl border-[0.5px] border-[#FFF4DE]/30 bg-white/20 p-3 shadow-[0_12px_24px_-18px_rgba(14,29,45,0.6)] backdrop-blur-sm transition-transform duration-300 hover:scale-105 overflow-hidden flex items-center justify-center"
+						style={{ width: 'clamp(90px, 12vw, 110px)' }}
 					>
-						<div className="flex items-center justify-between px-2">
-							<span className="h-3 w-3 rounded-full bg-[#204060]/60" />
-							<span className="h-3 w-3 rounded-full bg-[#204060]/60" />
-						</div>
-						<div className="mt-3 flex justify-center">
-							<span className="h-2 w-10 rounded-full bg-[#204060]/40" />
-						</div>
+						<img
+							src={emotion.src}
+							alt={`Emotion card ${emotion.id}`}
+							className="w-full h-auto object-contain"
+						/>
 					</div>
 				))}
 			</div>
@@ -54,7 +47,7 @@ function CardColumn({ direction, duration, delay }) {
 
 function AnimatedBackground() {
 	return (
-		<div className="absolute inset-0 grid grid-cols-3 gap-6 px-6 py-10 md:grid-cols-5 pointer-events-none">
+		<div className="absolute inset-0 grid grid-cols-4 gap-6 px-6 py-10 md:grid-cols-7 pointer-events-none">
 			{columns.map((column, index) => (
 				<CardColumn
 					key={`${column.direction}-${index}`}

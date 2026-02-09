@@ -214,13 +214,7 @@ export default function UniversityDashboard() {
 						</div>
 					</div>
 
-					<button
-						type="button"
-						className="absolute bottom-8 right-8 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#204060] text-[#FFF4DE] shadow-[0_16px_28px_-18px_rgba(14,29,45,0.7)] transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#204060]"
-						aria-label="Quick help"
-					>
-						<span aria-hidden="true">📞</span>
-					</button>
+					{}
 				</main>
 			</div>
 		</div>
