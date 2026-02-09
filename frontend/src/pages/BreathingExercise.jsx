@@ -6,7 +6,8 @@ const exercises = [
 	{
 		id: 'belly',
 		title: 'Belly Breathing',
-		description: 'Slow belly expansion to steady your nervous system.',
+		description:
+			'Slow, deep breathing where your belly rises as you inhale and falls as you exhale. Helps calm the nervous system and reduce anxiety.',
 		phases: [
 			{ label: 'Inhale', duration: 5, scaleStart: 0.75, scaleEnd: 1 },
 			{ label: 'Exhale', duration: 5, scaleStart: 1, scaleEnd: 0.75 },
@@ -15,7 +16,8 @@ const exercises = [
 	{
 		id: '478',
 		title: '4-7-8 Breathing',
-		description: 'Inhale 4, hold 7, exhale 8 for deep calm.',
+		description:
+			'Inhale for 4 seconds, hold for 7, and exhale slowly for 8. Great for calming the mind during stress or before sleep.',
 		phases: [
 			{ label: 'Inhale', duration: 4, scaleStart: 0.7, scaleEnd: 1 },
 			{ label: 'Hold', duration: 7, scaleStart: 1, scaleEnd: 1 },
@@ -25,7 +27,8 @@ const exercises = [
 	{
 		id: 'box',
 		title: 'Box Breathing (4-4-4-4)',
-		description: 'Equal counts to reset focus and regulate stress.',
+		description:
+			'Equal inhale, hold, exhale, and hold—each for 4 seconds. Helps regain control and focus when feeling overwhelmed.',
 		phases: [
 			{ label: 'Inhale', duration: 4, scaleStart: 0.7, scaleEnd: 1 },
 			{ label: 'Hold', duration: 4, scaleStart: 1, scaleEnd: 1 },
@@ -36,7 +39,8 @@ const exercises = [
 	{
 		id: 'cyclic',
 		title: 'Cyclic Sighing',
-		description: 'Two inhales followed by a long releasing exhale.',
+		description:
+			'A deep inhale followed by a short second sip of air, then a long slow exhale. Excellent for improving mood and relaxation.',
 		phases: [
 			{ label: 'Inhale', duration: 3, scaleStart: 0.7, scaleEnd: 0.95 },
 			{ label: 'Inhale (sip)', duration: 1, scaleStart: 0.95, scaleEnd: 1.05 },
@@ -46,7 +50,8 @@ const exercises = [
 	{
 		id: 'pursed',
 		title: 'Pursed-Lip Breathing',
-		description: 'Quick inhale, slow controlled exhale.',
+		description:
+			'Inhale through the nose and exhale slowly through pursed lips. Useful during panic or shortness of breath.',
 		phases: [
 			{ label: 'Inhale', duration: 2, scaleStart: 0.7, scaleEnd: 0.95 },
 			{ label: 'Exhale', duration: 4, scaleStart: 0.95, scaleEnd: 0.7 },
@@ -123,75 +128,77 @@ export default function BreathingExercise() {
 					onLogout={() => navigate('/')}
 					onContact={() => navigate('/contact-us')}
 				/>
-				<main className="flex flex-1 flex-col px-6 py-6">
-					<h1 className="text-2xl font-semibold text-[#0E1D2D]">
+				<main className="flex flex-1 flex-col px-10 py-10">
+					<h1 className="text-5xl font-semibold text-[#0E1D2D]">
 						Breathing exercises
 					</h1>
 
-					<div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					<div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 						{exercises.map((exercise) => (
 							<button
 								key={exercise.id}
 								type="button"
 								onClick={() => setActiveExerciseId(exercise.id)}
-								className="rounded-3xl bg-[#BED4C5] p-4 text-left text-[#0E1D2D] shadow-[0_12px_22px_-18px_rgba(14,29,45,0.7)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-18px_rgba(14,29,45,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A7D0D6]"
+								className="aspect-[5/3] rounded-3xl bg-[#BED4C5] p-8 text-center text-[#0E1D2D] shadow-[0_12px_22px_-18px_rgba(14,29,45,0.7)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-18px_rgba(14,29,45,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A7D0D6]"
 							>
-								<p className="text-sm font-semibold text-[#204060]">
+								<div className="flex h-full flex-col items-center justify-center">
+									<p className="text-2xl font-semibold text-[#204060]">
 									{exercise.title}
-								</p>
-								<p className="mt-2 text-xs text-[#0E1D2D]/70">
+									</p>
+									<p className="mt-4 text-lg text-[#0E1D2D]/70">
 									{exercise.description}
-								</p>
+									</p>
+								</div>
 							</button>
 						))}
 					</div>
 
 					{activeExercise ? (
 						<div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0E1D2D]/50 px-4 py-8">
-							<div className="relative w-full max-w-sm rounded-3xl bg-[#FEDC97] p-6 text-[#0E1D2D] shadow-[0_20px_36px_-24px_rgba(14,29,45,0.7)]">
+							<div className="relative w-full max-w-lg rounded-3xl bg-[#FEDC97] p-10 text-[#0E1D2D] shadow-[0_20px_36px_-24px_rgba(14,29,45,0.7)]">
 								<button
 									type="button"
 									onClick={() => setActiveExerciseId(null)}
-									className="absolute right-4 top-4 rounded-full bg-[#204060] px-3 py-1 text-xs font-semibold text-[#FFF4DE]"
+									className="absolute right-4 top-4 rounded-full bg-[#204060] px-5 py-2 text-base font-semibold text-[#FFF4DE]"
 								>
 									Close
 								</button>
-								<p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#204060]">
+								<p className="text-lg font-semibold uppercase tracking-[0.2em] text-[#204060]">
 									{activeExercise.title}
 								</p>
-								<div className="mt-6 flex flex-col items-center gap-4">
-									<div className="relative flex h-40 w-40 items-center justify-center rounded-full bg-[#BED4C5]">
+								<div className="mt-10 flex flex-col items-center gap-8">
+									<div className="relative flex h-64 w-64 items-center justify-center rounded-full bg-[#BED4C5]">
 										<div
-											className="flex h-24 w-24 items-center justify-center rounded-full bg-[#6F9FA5] transition-transform duration-1000 ease-in-out"
+												className="flex h-40 w-40 items-center justify-center rounded-full bg-[#6F9FA5] transition-transform duration-1000 ease-in-out"
 											style={{ transform: `scale(${innerScale})` }}
 										>
-											<span className="text-xs font-semibold text-[#FFF4DE]">
+												<span className="text-base font-semibold text-[#FFF4DE]">
 												{currentPhase?.label ?? 'Ready'}
 											</span>
 										</div>
 									</div>
 									<div className="text-center">
-										<p className="text-sm font-semibold text-[#204060]">
+											<p className="text-lg font-semibold text-[#204060]">
 											{currentPhase?.label ?? 'Ready'}
 										</p>
-										<p className="mt-1 text-3xl font-semibold text-[#0E1D2D]">
+											<p className="mt-3 text-5xl font-semibold text-[#0E1D2D]">
 											{secondsLeft || currentPhase?.duration}
 										</p>
 									</div>
 								</div>
 
-								<div className="mt-6 flex items-center justify-between">
+									<div className="mt-10 flex items-center justify-between">
 									<button
 										type="button"
 										onClick={handleReset}
-										className="rounded-2xl bg-[#204060] px-4 py-2 text-sm font-semibold text-[#FFF4DE] shadow-[0_12px_20px_-16px_rgba(14,29,45,0.7)]"
+											className="rounded-2xl bg-[#204060] px-6 py-3.5 text-lg font-semibold text-[#FFF4DE] shadow-[0_12px_20px_-16px_rgba(14,29,45,0.7)]"
 									>
 										Reset
 									</button>
 									<button
 										type="button"
 										onClick={() => setIsRunning((current) => !current)}
-										className="rounded-2xl bg-[#28666E] px-4 py-2 text-sm font-semibold text-[#FFF4DE] shadow-[0_12px_20px_-16px_rgba(14,29,45,0.7)]"
+											className="rounded-2xl bg-[#28666E] px-6 py-3.5 text-lg font-semibold text-[#FFF4DE] shadow-[0_12px_20px_-16px_rgba(14,29,45,0.7)]"
 									>
 										{isRunning ? 'Pause' : 'Start'}
 									</button>
