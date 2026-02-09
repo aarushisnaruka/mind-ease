@@ -4,24 +4,33 @@ import Sidebar from '../components/Sidebar'
 const questions = [
 	{
 		id: 1,
-		text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?',
+		text: 'I have felt cheerful and in good spirits.',
 	},
 	{
 		id: 2,
-		text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?',
+		text: 'I have felt calm and relaxed.',
 	},
 	{
 		id: 3,
-		text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?',
+		text: 'I have felt active and vigorous.',
+	},
+	{
+		id: 4,
+		text: 'I woke up feeling fresh and rested.',
+	},
+	{
+		id: 5,
+		text: 'My daily life has been filled with things that interest me.',
 	},
 ]
 
 const options = [
-	{ key: 'A', label: 'Very low' },
-	{ key: 'B', label: 'Very low' },
-	{ key: 'C', label: 'Very low' },
-	{ key: 'D', label: 'Very low' },
-	{ key: 'E', label: 'Very low' },
+	{ key: '0', label: 'At no time' },
+	{ key: '1', label: 'Some of the time' },
+	{ key: '2', label: 'Less than half the time' },
+	{ key: '3', label: 'More than half the time' },
+	{ key: '4', label: 'Most of the time' },
+	{ key: '5', label: 'All of the time' },
 ]
 
 export default function PreviewQuiz() {

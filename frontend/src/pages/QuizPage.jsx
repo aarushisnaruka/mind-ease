@@ -7,23 +7,36 @@ const quizData = [
 		title: 'Section 1',
 		questions: [
 			{
-				id: 'q-1',
-				text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?',
+				id: 'pss-1',
+				text: 'In the last month, how often have you been upset because of something that happened unexpectedly?',
 				options: [
-					'Gauze grievance disorder',
-					'Retained surgical sponge syndrome',
-					'Sponge-induced septicemia',
-					'Fabric foreign object syndrome',
+					'Never',
+					'Almost Never',
+					'Sometimes',
+					'Fairly Often',
+					'Very Often',
 				],
 			},
 			{
-				id: 'q-2',
-				text: 'Which response best describes healthy coping during stressful weeks?',
+				id: 'pss-2',
+				text: 'In the last month, how often have you felt that you were unable to control the important things in your life?',
 				options: [
-					'Avoiding all contact',
-					'Bottling emotions',
-					'Balancing rest and support',
-					'Skipping meals',
+					'Never',
+					'Almost Never',
+					'Sometimes',
+					'Fairly Often',
+					'Very Often',
+				],
+			},
+			{
+				id: 'pss-3',
+				text: 'In the last month, how often have you felt nervous and "stressed"?',
+				options: [
+					'Never',
+					'Almost Never',
+					'Sometimes',
+					'Fairly Often',
+					'Very Often',
 				],
 			},
 		],
@@ -33,13 +46,33 @@ const quizData = [
 		title: 'Section 2',
 		questions: [
 			{
-				id: 'q-3',
-				text: 'What can help reduce study-related anxiety quickly?',
+				id: 'gad-1',
+				text: 'Feeling nervous, anxious or on edge',
 				options: [
-					'Deep breathing for 60 seconds',
-					'Skipping water',
-					'Overloading caffeine',
-					'Ignoring signals',
+					'Not at all',
+					'Several days',
+					'More than half the days',
+					'Nearly every day',
+				],
+			},
+			{
+				id: 'gad-2',
+				text: 'Not being able to stop or control worrying',
+				options: [
+					'Not at all',
+					'Several days',
+					'More than half the days',
+					'Nearly every day',
+				],
+			},
+			{
+				id: 'gad-3',
+				text: 'Worrying too much about different things',
+				options: [
+					'Not at all',
+					'Several days',
+					'More than half the days',
+					'Nearly every day',
 				],
 			},
 		],
@@ -49,13 +82,33 @@ const quizData = [
 		title: 'Section 3',
 		questions: [
 			{
-				id: 'q-4',
-				text: 'Which habit supports better sleep quality?',
+				id: 'phq-1',
+				text: 'Little interest or pleasure in doing things?',
 				options: [
-					'Keeping a consistent bedtime',
-					'Checking notifications all night',
-					'Skipping wind-down routines',
-					'Heavy late-night meals',
+					'Not at all',
+					'Several days',
+					'More than half the days',
+					'Nearly every day',
+				],
+			},
+			{
+				id: 'phq-2',
+				text: 'Feeling down, depressed, or hopeless?',
+				options: [
+					'Not at all',
+					'Several days',
+					'More than half the days',
+					'Nearly every day',
+				],
+			},
+			{
+				id: 'phq-3',
+				text: 'Trouble falling or staying asleep, or sleeping too much?',
+				options: [
+					'Not at all',
+					'Several days',
+					'More than half the days',
+					'Nearly every day',
 				],
 			},
 		],
@@ -79,16 +132,6 @@ function QuizPage() {
 
 	const currentSection = quizData[sectionIndex]
 	const currentQuestion = currentSection.questions[questionIndex]
-
-	const questionNumber = useMemo(() => {
-		let count = 0
-		for (let i = 0; i < quizData.length; i += 1) {
-			if (i < sectionIndex) {
-				count += quizData[i].questions.length
-			}
-		}
-		return count + questionIndex + 1
-	}, [questionIndex, sectionIndex])
 
 	const questionKey = `${currentSection.id}-${currentQuestion.id}`
 	const selectedOption = answers[questionKey]
@@ -162,7 +205,7 @@ function QuizPage() {
 		return (
 			<div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#BED4C5] px-6">
 				<div className="relative z-10 rounded-3xl bg-[#FFF4DE] px-10 py-12 text-center shadow-[0_20px_40px_-25px_rgba(14,29,45,0.6)]">
-					<p className="text-2xl font-semibold text-[#0E1D2D]">🎉 Yay! You have completed the quiz!</p>
+					<p className="text-2xl font-semibold text-[#0E1D2D]">Thank you for checking in with yourself today. Your well-being matters.</p>
 					<button
 						type="button"
 						onClick={() => navigate('/student-dashboard')}
@@ -229,7 +272,8 @@ function QuizPage() {
 				</p>
 				<div className="mt-4 h-1 w-16 rounded-full bg-[#7C9885]" />
 
-				<div className="mt-6 flex w-full max-w-md flex-col gap-3">
+				{/* Changed from grid to flex-col to stack options vertically */}
+				<div className="mt-6 flex w-full max-w-2xl flex-col gap-3">
 					{currentQuestion.options.map((option, index) => {
 						const isSelected = selectedOption === index
 						const label = String.fromCharCode(65 + index)

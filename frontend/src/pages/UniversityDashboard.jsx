@@ -71,7 +71,7 @@ function WelcomeBanner({ onAnnouncementsClick }) {
 			<div className="absolute inset-0 bg-black/10" />
 			<div className="absolute inset-0 flex items-center justify-start px-8 md:px-10">
 				<h1 className="font-serif text-4xl font-semibold text-[#204060] drop-shadow-lg md:text-6xl">
-					Welcome...
+					Welcome to MindEase!
 				</h1>
 			</div>
 			<button
@@ -149,7 +149,7 @@ export default function UniversityDashboard() {
 								<p className="text-base font-semibold uppercase tracking-[0.2em] text-[#204060]">
 									Campus Pulse
 								</p>
-								<div className="mt-6 text-8xl font-semibold">60%</div>
+								<div className="mt-8 text-9xl font-semibold">60%</div>
 								<p className="mt-6 text-base leading-relaxed text-[#0E1D2D]/80">
 									of students feeling down right now — big number! Time for more
 									check-ins?

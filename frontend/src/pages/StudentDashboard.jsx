@@ -4,12 +4,12 @@ import { GraduationCap } from 'lucide-react'
 
 const helplines = [
 	{
-		title: 'Live. Love. Support. Suicide Prevention',
-		detail: '24/7 available · 1800-233-7860',
+		title: 'Tele MANAS',
+		detail: '24/7 · 14416',
 	},
 	{
-		title: 'Sneha Suicide Prevention Helpline',
-		detail: '10:00 am to 10:00 pm · 044 2464 0050',
+		title: 'Live. Love. Support. Suicide Prevention',
+		detail: '24/7 available · 1800-233-7860',
 	},
 	{
 		title: 'MP Drona Lifeline',
@@ -20,8 +20,8 @@ const helplines = [
 		detail: '10:00 am to 8:00 pm · 9152987821',
 	},
 	{
-		title: 'Tele MANAS',
-		detail: '24/7 · 14416',
+		title: 'Sneha Suicide Prevention Helpline',
+		detail: '10:00 am to 10:00 pm · 044 2464 0050',
 	},
 ]
 
@@ -81,7 +81,7 @@ function WelcomeBanner({ onAnnouncementsClick }) {
 			<div className="absolute inset-0 bg-black/10" />
 			<div className="absolute inset-0 flex items-center justify-start px-8 md:px-10">
 				<h1 className="font-serif text-4xl font-semibold text-[#204060] drop-shadow-lg md:text-6xl">
-					Welcome...
+					Welcome to MindEase!
 				</h1>
 			</div>
 			<button

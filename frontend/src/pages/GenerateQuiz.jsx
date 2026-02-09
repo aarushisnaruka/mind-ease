@@ -1,6 +1,191 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+// --- Data Setup ---
+
+const weeklyData = [
+	{
+		id: 'weekly-who5',
+		title: 'WHO-5 Well-Being Index',
+		questions: [
+			{
+				id: 'who5-1',
+				text: 'I have felt cheerful and in good spirits.',
+				options: {
+					0: 'At no time',
+					1: 'Some of the time',
+					2: 'Less than half the time',
+					3: 'More than half the time',
+					4: 'Most of the time',
+					5: 'All of the time',
+				},
+			},
+			{
+				id: 'who5-2',
+				text: 'I have felt calm and relaxed.',
+				options: {
+					0: 'At no time',
+					1: 'Some of the time',
+					2: 'Less than half the time',
+					3: 'More than half the time',
+					4: 'Most of the time',
+					5: 'All of the time',
+				},
+			},
+			{
+				id: 'who5-3',
+				text: 'I have felt active and vigorous.',
+				options: {
+					0: 'At no time',
+					1: 'Some of the time',
+					2: 'Less than half the time',
+					3: 'More than half the time',
+					4: 'Most of the time',
+					5: 'All of the time',
+				},
+			},
+			{
+				id: 'who5-4',
+				text: 'I woke up feeling fresh and rested.',
+				options: {
+					0: 'At no time',
+					1: 'Some of the time',
+					2: 'Less than half the time',
+					3: 'More than half the time',
+					4: 'Most of the time',
+					5: 'All of the time',
+				},
+			},
+			{
+				id: 'who5-5',
+				text: 'My daily life has been filled with things that interest me.',
+				options: {
+					0: 'At no time',
+					1: 'Some of the time',
+					2: 'Less than half the time',
+					3: 'More than half the time',
+					4: 'Most of the time',
+					5: 'All of the time',
+				},
+			},
+		],
+	},
+]
+
+const monthlyData = [
+	{
+		id: 'monthly-s1',
+		title: 'Section 1',
+		questions: [
+			{
+				id: 'pss-1',
+				text: 'In the last month, how often have you been upset because of something that happened unexpectedly?',
+				options: {
+					A: 'Never',
+					B: 'Almost Never',
+					C: 'Sometimes',
+					D: 'Fairly Often',
+					E: 'Very Often',
+				},
+			},
+			{
+				id: 'pss-2',
+				text: 'In the last month, how often have you felt that you were unable to control the important things in your life?',
+				options: {
+					A: 'Never',
+					B: 'Almost Never',
+					C: 'Sometimes',
+					D: 'Fairly Often',
+					E: 'Very Often',
+				},
+			},
+			{
+				id: 'pss-3',
+				text: 'In the last month, how often have you felt nervous and "stressed"?',
+				options: {
+					A: 'Never',
+					B: 'Almost Never',
+					C: 'Sometimes',
+					D: 'Fairly Often',
+					E: 'Very Often',
+				},
+			},
+		],
+	},
+	{
+		id: 'monthly-s2',
+		title: 'Section 2',
+		questions: [
+			{
+				id: 'gad-1',
+				text: 'Feeling nervous, anxious or on edge',
+				options: {
+					A: 'Not at all',
+					B: 'Several days',
+					C: 'More than half the days',
+					D: 'Nearly every day',
+				},
+			},
+			{
+				id: 'gad-2',
+				text: 'Not being able to stop or control worrying',
+				options: {
+					A: 'Not at all',
+					B: 'Several days',
+					C: 'More than half the days',
+					D: 'Nearly every day',
+				},
+			},
+			{
+				id: 'gad-3',
+				text: 'Worrying too much about different things',
+				options: {
+					A: 'Not at all',
+					B: 'Several days',
+					C: 'More than half the days',
+					D: 'Nearly every day',
+				},
+			},
+		],
+	},
+	{
+		id: 'monthly-s3',
+		title: 'Section 3',
+		questions: [
+			{
+				id: 'phq-1',
+				text: 'Little interest or pleasure in doing things?',
+				options: {
+					A: 'Not at all',
+					B: 'Several days',
+					C: 'More than half the days',
+					D: 'Nearly every day',
+				},
+			},
+			{
+				id: 'phq-2',
+				text: 'Feeling down, depressed, or hopeless?',
+				options: {
+					A: 'Not at all',
+					B: 'Several days',
+					C: 'More than half the days',
+					D: 'Nearly every day',
+				},
+			},
+			{
+				id: 'phq-3',
+				text: 'Trouble falling or staying asleep, or sleeping too much?',
+				options: {
+					A: 'Not at all',
+					B: 'Several days',
+					C: 'More than half the days',
+					D: 'Nearly every day',
+				},
+			},
+		],
+	},
+]
+
 const buildSection = (index) => {
 	const sectionId = `section-${index}-${Date.now()}`
 	return {
@@ -9,52 +194,36 @@ const buildSection = (index) => {
 		questions: [
 			{
 				id: `${sectionId}-q-1`,
-				text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?'.trim(),
+				text: 'New Question',
 				options: {
-					A: 'Very low',
-					B: 'Very low',
-					C: 'Very low',
-					D: 'Very low',
-					E: 'Very low',
+					A: 'Option A',
+					B: 'Option B',
+					C: 'Option C',
+					D: 'Option D',
 				},
 			},
 		],
 	}
 }
 
-const buildInitialData = () => {
-	const first = buildSection(1)
-	const second = buildSection(2)
-	second.questions.push({
-		id: `${second.id}-q-2`,
-		text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?'.trim(),
-		options: {
-			A: 'Very low',
-			B: 'Very low',
-			C: 'Very low',
-			D: 'Very low',
-			E: 'Very low',
-		},
-	})
-
-	return [first, second]
-}
-
 function GenerateQuiz() {
 	const navigate = useNavigate()
 	const [activeQuiz, setActiveQuiz] = useState('weekly')
+
+	// Initialize with the requested datasets
 	const [quizData, setQuizData] = useState({
-		weekly: buildInitialData(),
-		monthly: buildInitialData(),
+		weekly: weeklyData,
+		monthly: monthlyData,
 	})
+
 	const [selection, setSelection] = useState({
 		weekly: {
-			sectionId: null,
-			questionId: null,
+			sectionId: weeklyData[0].id,
+			questionId: weeklyData[0].questions[0].id,
 		},
 		monthly: {
-			sectionId: null,
-			questionId: null,
+			sectionId: monthlyData[0].id,
+			questionId: monthlyData[0].questions[0].id,
 		},
 	})
 	const [statusMessage, setStatusMessage] = useState('')
@@ -100,7 +269,7 @@ function GenerateQuiz() {
 		}
 
 		return currentSections.find(
-			(section) => section.id === currentSelection.sectionId,
+			(section) => section.id === currentSelection.sectionId
 		)
 	}
 
@@ -113,11 +282,11 @@ function GenerateQuiz() {
 							questions: section.questions.map((question) =>
 								question.id === questionId
 									? { ...question, text: value }
-									: question,
+									: question
 							),
 					  }
-					: section,
-			),
+					: section
+			)
 		)
 	}
 
@@ -136,13 +305,86 @@ function GenerateQuiz() {
 												[optionKey]: value,
 											},
 									  }
-									: question,
+									: question
 							),
 					  }
-					: section,
-			),
+					: section
+			)
 		)
 	}
+
+	// --- Auto-Numbering Logic for Add/Delete Options ---
+
+	const handleAddOption = (sectionId, questionId) => {
+		updateSections((sections) =>
+			sections.map((section) => {
+				if (section.id !== sectionId) return section
+				return {
+					...section,
+					questions: section.questions.map((question) => {
+						if (question.id !== questionId) return question
+
+						const keys = Object.keys(question.options)
+						// Check if we are using Numeric (0,1,2) or Alpha (A,B,C) keys
+						// If empty, default to 'A' (Alpha)
+						const isNumeric = keys.length > 0 && !isNaN(keys[0])
+
+						const nextIndex = keys.length
+						const nextKey = isNumeric
+							? nextIndex
+							: String.fromCharCode(65 + nextIndex)
+
+						return {
+							...question,
+							options: {
+								...question.options,
+								[nextKey]: `Option ${nextKey}`,
+							},
+						}
+					}),
+				}
+			})
+		)
+	}
+
+	const handleDeleteOption = (sectionId, questionId, optionKey) => {
+		updateSections((sections) =>
+			sections.map((section) => {
+				if (section.id !== sectionId) return section
+				return {
+					...section,
+					questions: section.questions.map((question) => {
+						if (question.id !== questionId) return question
+
+						// Detect mode based on the key we are deleting
+						// If deleting '0', implies numeric mode. If deleting 'A', implies alpha.
+						const isNumeric = !isNaN(optionKey)
+
+						// 1. Filter out the deleted key
+						const remainingValues = Object.entries(question.options)
+							.filter(([k]) => k !== optionKey)
+							.map(([, val]) => val)
+
+						// 2. Re-index remaining keys sequentially
+						const newOptions = {}
+						remainingValues.forEach((val, index) => {
+							const newKey = isNumeric
+								? index
+								: String.fromCharCode(65 + index)
+							newOptions[newKey] = val
+						})
+
+						return {
+							...question,
+							options: newOptions,
+						}
+					}),
+				}
+			})
+		)
+	}
+
+	// ---------------------------------------------
 
 	const handleAddQuestion = () => {
 		const section = ensureSelection()
@@ -156,7 +398,6 @@ function GenerateQuiz() {
 				B: 'Option B',
 				C: 'Option C',
 				D: 'Option D',
-				E: 'Option E',
 			},
 		}
 
@@ -172,7 +413,7 @@ function GenerateQuiz() {
 				}
 
 				const index = item.questions.findIndex(
-					(question) => question.id === currentSelection.questionId,
+					(question) => question.id === currentSelection.questionId
 				)
 				const nextQuestions = [...item.questions]
 				const insertIndex = index === -1 ? nextQuestions.length : index + 1
@@ -181,7 +422,7 @@ function GenerateQuiz() {
 					...item,
 					questions: nextQuestions,
 				}
-			}),
+			})
 		)
 
 		updateSelection({
@@ -210,19 +451,19 @@ function GenerateQuiz() {
 					.map((section) => {
 						if (section.id !== currentSelection.sectionId) return section
 						const filtered = section.questions.filter(
-							(question) => question.id !== currentSelection.questionId,
+							(question) => question.id !== currentSelection.questionId
 						)
 						return { ...section, questions: filtered }
 					})
-					.filter((section) => section.questions.length > 0),
+					.filter((section) => section.questions.length > 0)
 			)
 
 			const section = currentSections.find(
-				(item) => item.id === currentSelection.sectionId,
+				(item) => item.id === currentSelection.sectionId
 			)
 			const remaining = section
 				? section.questions.filter(
-						(question) => question.id !== currentSelection.questionId,
+						(question) => question.id !== currentSelection.questionId
 				  )
 				: []
 			const fallbackQuestion = remaining[0] || null
@@ -235,7 +476,7 @@ function GenerateQuiz() {
 		}
 
 		updateSections((sections) =>
-			sections.filter((section) => section.id !== currentSelection.sectionId),
+			sections.filter((section) => section.id !== currentSelection.sectionId)
 		)
 		updateSelection({
 			sectionId: null,
@@ -245,7 +486,7 @@ function GenerateQuiz() {
 
 	const handleSave = () => {
 		setStatusMessage(
-			`${activeQuiz === 'weekly' ? 'Weekly' : 'Monthly'} quiz saved.`,
+			`${activeQuiz === 'weekly' ? 'Weekly' : 'Monthly'} quiz saved.`
 		)
 		window.setTimeout(() => setStatusMessage(''), 2000)
 	}
@@ -254,7 +495,7 @@ function GenerateQuiz() {
 		setStatusMessage(
 			`${
 				activeQuiz === 'weekly' ? 'Weekly' : 'Monthly'
-			} quiz generated successfully.`,
+			} quiz generated successfully.`
 		)
 		window.setTimeout(() => setStatusMessage(''), 2000)
 	}
@@ -279,7 +520,6 @@ function GenerateQuiz() {
 										return
 									}
 									if (item === 'Generate quiz') {
-										// We are already on Generate quiz, so do nothing or refresh
 										return
 									}
 									if (item === 'Log out') {
@@ -288,7 +528,7 @@ function GenerateQuiz() {
 								}}
 								className={`rounded-xl px-3 py-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFF4DE] ${
 									item === 'Generate quiz'
-										? 'bg-[#0E1D2D] text-[#FFF4DE]' // Highlight current page
+										? 'bg-[#0E1D2D] text-[#FFF4DE]'
 										: 'hover:bg-[#0E1D2D]'
 								}`}
 							>
@@ -333,7 +573,7 @@ function GenerateQuiz() {
 					<section className="flex-1 overflow-hidden rounded-3xl bg-[#6F9FA5]/30 p-6">
 						<div className="h-[520px] overflow-y-auto pr-3">
 							<div className="space-y-6">
-								{currentSections.map((section) => (
+								{currentSections.map((section, sectionIdx) => (
 									<div key={section.id} className="space-y-4">
 										<button
 											type="button"
@@ -354,11 +594,9 @@ function GenerateQuiz() {
 										</button>
 
 										<div className="space-y-4">
-											{/* Updated mapping to use index for numbering */}
 											{section.questions.map((question, index) => {
 												const isSelected =
 													currentSelection.questionId === question.id
-												// Numbering resets for each section (1, 2, 3...)
 												const questionNumber = index + 1
 
 												return (
@@ -396,7 +634,7 @@ function GenerateQuiz() {
 																	handleQuestionChange(
 																		section.id,
 																		question.id,
-																		event.target.value,
+																		event.target.value
 																	)
 																}
 																className="w-full bg-transparent text-sm font-semibold text-[#0E1D2D] outline-none"
@@ -406,7 +644,7 @@ function GenerateQuiz() {
 														<div className="grid gap-2 text-sm text-[#0E1D2D] md:grid-cols-2">
 															{Object.entries(question.options).map(
 																([key, value]) => (
-																	<label
+																	<div
 																		key={key}
 																		className="flex items-center gap-2 rounded-xl bg-[#FFF4DE] px-3 py-2"
 																	>
@@ -420,14 +658,43 @@ function GenerateQuiz() {
 																					section.id,
 																					question.id,
 																					key,
-																					event.target.value,
+																					event.target.value
 																				)
 																			}
 																			className="w-full bg-transparent text-sm outline-none"
 																		/>
-																	</label>
-																),
+																		{/* Delete Option Button */}
+																		<button
+																			type="button"
+																			onClick={(e) => {
+																				e.stopPropagation()
+																				handleDeleteOption(
+																					section.id,
+																					question.id,
+																					key
+																				)
+																			}}
+																			className="flex h-5 w-5 items-center justify-center rounded-full bg-[#204060] text-xs font-bold text-[#FFF4DE] hover:bg-red-500"
+																		>
+																			-
+																		</button>
+																	</div>
+																)
 															)}
+														</div>
+
+														{/* Add Option Button */}
+														<div className="mt-3 flex justify-end">
+															<button
+																type="button"
+																onClick={(e) => {
+																	e.stopPropagation()
+																	handleAddOption(section.id, question.id)
+																}}
+																className="flex h-6 w-6 items-center justify-center rounded-full bg-[#28666E] text-sm font-bold text-[#FFF4DE] hover:bg-[#204060]"
+															>
+																+
+															</button>
 														</div>
 													</div>
 												)
