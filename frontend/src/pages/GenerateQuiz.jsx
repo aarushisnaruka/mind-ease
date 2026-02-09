@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const buildSection = (index) => {
@@ -9,8 +9,7 @@ const buildSection = (index) => {
 		questions: [
 			{
 				id: `${sectionId}-q-1`,
-				text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?'
-					.trim(),
+				text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?'.trim(),
 				options: {
 					A: 'Very low',
 					B: 'Very low',
@@ -28,8 +27,7 @@ const buildInitialData = () => {
 	const second = buildSection(2)
 	second.questions.push({
 		id: `${second.id}-q-2`,
-		text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?'
-			.trim(),
+		text: 'Which of the following is the term for surgical complications resulting from surgical sponges left inside the patient\'s body?'.trim(),
 		options: {
 			A: 'Very low',
 			B: 'Very low',
@@ -63,18 +61,6 @@ function GenerateQuiz() {
 
 	const currentSections = quizData[activeQuiz]
 	const currentSelection = selection[activeQuiz]
-
-	const indexedQuestions = useMemo(() => {
-		const lookup = new Map()
-		let running = 0
-		currentSections.forEach((section) => {
-			section.questions.forEach((question) => {
-				running += 1
-				lookup.set(question.id, running)
-			})
-		})
-		return lookup
-	}, [currentSections])
 
 	const updateSections = (updater) => {
 		setQuizData((prev) => ({
@@ -113,7 +99,9 @@ function GenerateQuiz() {
 			return firstSection
 		}
 
-		return currentSections.find((section) => section.id === currentSelection.sectionId)
+		return currentSections.find(
+			(section) => section.id === currentSelection.sectionId,
+		)
 	}
 
 	const handleQuestionChange = (sectionId, questionId, value) => {
@@ -123,11 +111,13 @@ function GenerateQuiz() {
 					? {
 							...section,
 							questions: section.questions.map((question) =>
-								question.id === questionId ? { ...question, text: value } : question
+								question.id === questionId
+									? { ...question, text: value }
+									: question,
 							),
-						}
-					: section
-			)
+					  }
+					: section,
+			),
 		)
 	}
 
@@ -145,12 +135,12 @@ function GenerateQuiz() {
 												...question.options,
 												[optionKey]: value,
 											},
-										}
-									: question
+									  }
+									: question,
 							),
-						}
-					: section
-			)
+					  }
+					: section,
+			),
 		)
 	}
 
@@ -181,7 +171,9 @@ function GenerateQuiz() {
 					}
 				}
 
-				const index = item.questions.findIndex((question) => question.id === currentSelection.questionId)
+				const index = item.questions.findIndex(
+					(question) => question.id === currentSelection.questionId,
+				)
 				const nextQuestions = [...item.questions]
 				const insertIndex = index === -1 ? nextQuestions.length : index + 1
 				nextQuestions.splice(insertIndex, 0, newQuestion)
@@ -189,7 +181,7 @@ function GenerateQuiz() {
 					...item,
 					questions: nextQuestions,
 				}
-			})
+			}),
 		)
 
 		updateSelection({
@@ -218,16 +210,20 @@ function GenerateQuiz() {
 					.map((section) => {
 						if (section.id !== currentSelection.sectionId) return section
 						const filtered = section.questions.filter(
-							(question) => question.id !== currentSelection.questionId
+							(question) => question.id !== currentSelection.questionId,
 						)
 						return { ...section, questions: filtered }
 					})
-					.filter((section) => section.questions.length > 0)
+					.filter((section) => section.questions.length > 0),
 			)
 
-			const section = currentSections.find((item) => item.id === currentSelection.sectionId)
+			const section = currentSections.find(
+				(item) => item.id === currentSelection.sectionId,
+			)
 			const remaining = section
-				? section.questions.filter((question) => question.id !== currentSelection.questionId)
+				? section.questions.filter(
+						(question) => question.id !== currentSelection.questionId,
+				  )
 				: []
 			const fallbackQuestion = remaining[0] || null
 
@@ -238,7 +234,9 @@ function GenerateQuiz() {
 			return
 		}
 
-		updateSections((sections) => sections.filter((section) => section.id !== currentSelection.sectionId))
+		updateSections((sections) =>
+			sections.filter((section) => section.id !== currentSelection.sectionId),
+		)
 		updateSelection({
 			sectionId: null,
 			questionId: null,
@@ -246,51 +244,66 @@ function GenerateQuiz() {
 	}
 
 	const handleSave = () => {
-		setStatusMessage(`${activeQuiz === 'weekly' ? 'Weekly' : 'Monthly'} quiz saved.`)
+		setStatusMessage(
+			`${activeQuiz === 'weekly' ? 'Weekly' : 'Monthly'} quiz saved.`,
+		)
 		window.setTimeout(() => setStatusMessage(''), 2000)
 	}
 
 	const handleGenerate = () => {
 		setStatusMessage(
-			`${activeQuiz === 'weekly' ? 'Weekly' : 'Monthly'} quiz generated successfully.`
+			`${
+				activeQuiz === 'weekly' ? 'Weekly' : 'Monthly'
+			} quiz generated successfully.`,
 		)
 		window.setTimeout(() => setStatusMessage(''), 2000)
 	}
 
 	return (
-		<div className="min-h-screen bg-[#204060] text-[#FFF4DE]">
-			<div className="mx-auto flex min-h-screen max-w-[1300px]">
-				<aside className="flex w-64 flex-col bg-[#0E1D2D] px-6 py-8">
-					<div className="mb-10 rounded-2xl bg-[#204060] px-4 py-3 text-sm font-semibold text-[#FFF4DE]">
-						MindEase
-					</div>
-					<nav className="flex flex-1 flex-col gap-3 text-sm">
-						<button
-							type="button"
-							onClick={() => navigate('/developer-dashboard')}
-							className="rounded-xl bg-[#204060] px-4 py-3 text-left text-[#FFF4DE] transition"
-						>
-							Home
-						</button>
-						<button
-							type="button"
-							className="rounded-xl bg-[#FEDC97] px-4 py-3 text-left font-semibold text-[#0E1D2D]"
-						>
-							Generate quiz
-						</button>
-						<button
-							type="button"
-							onClick={() => navigate('/')}
-							className="mt-auto rounded-xl border border-[#28666E] px-4 py-3 text-left text-[#BED4C5]"
-						>
-							Log out
-						</button>
+		<div className="relative min-h-screen">
+			{/* Background from Developer Dashboard */}
+			<div className="fixed inset-0 -z-10 bg-[url('/RoleChoiceImg/role_choice_bg.png')] bg-cover bg-center bg-no-repeat" />
+			<div className="fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-black/5 to-black/10" />
+
+			<div className="flex min-h-screen">
+				{/* Sidebar from Developer Dashboard */}
+				<aside className="flex h-screen w-56 flex-col gap-6 bg-[#204060] px-6 py-8 text-[#FFF4DE]">
+					<nav className="flex flex-col gap-2 text-sm font-medium">
+						{['Home', 'Generate quiz', 'Log out'].map((item) => (
+							<button
+								key={item}
+								type="button"
+								onClick={() => {
+									if (item === 'Home') {
+										navigate('/developer-dashboard')
+										return
+									}
+									if (item === 'Generate quiz') {
+										// We are already on Generate quiz, so do nothing or refresh
+										return
+									}
+									if (item === 'Log out') {
+										navigate('/')
+									}
+								}}
+								className={`rounded-xl px-3 py-2 text-left transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFF4DE] ${
+									item === 'Generate quiz'
+										? 'bg-[#0E1D2D] text-[#FFF4DE]' // Highlight current page
+										: 'hover:bg-[#0E1D2D]'
+								}`}
+							>
+								{item}
+							</button>
+						))}
 					</nav>
 				</aside>
 
-				<main className="flex flex-1 flex-col px-8 py-6">
+				{/* Main Content */}
+				<main className="flex flex-1 flex-col px-6 py-6">
 					<header className="mb-6 flex flex-wrap items-center justify-between gap-4">
-						<h1 className="text-2xl font-semibold text-[#FFF4DE]">Generate Quiz</h1>
+						<h1 className="text-2xl font-semibold text-[#0E1D2D]">
+							Generate Quiz
+						</h1>
 						<div className="flex items-center gap-2">
 							<button
 								type="button"
@@ -331,7 +344,8 @@ function GenerateQuiz() {
 												})
 											}
 											className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-												currentSelection.sectionId === section.id && !currentSelection.questionId
+												currentSelection.sectionId === section.id &&
+												!currentSelection.questionId
 													? 'bg-[#FEDC97] text-[#0E1D2D]'
 													: 'bg-[#28666E] text-[#FFF4DE]'
 											}`}
@@ -340,9 +354,12 @@ function GenerateQuiz() {
 										</button>
 
 										<div className="space-y-4">
-											{section.questions.map((question) => {
-												const isSelected = currentSelection.questionId === question.id
-												const questionNumber = indexedQuestions.get(question.id)
+											{/* Updated mapping to use index for numbering */}
+											{section.questions.map((question, index) => {
+												const isSelected =
+													currentSelection.questionId === question.id
+												// Numbering resets for each section (1, 2, 3...)
+												const questionNumber = index + 1
 
 												return (
 													<div
@@ -364,7 +381,9 @@ function GenerateQuiz() {
 															}
 														}}
 														className={`rounded-2xl border-2 p-4 transition ${
-															isSelected ? 'border-[#FEDC97] bg-[#FFF4DE]' : 'border-transparent bg-[#BED4C5]'
+															isSelected
+																? 'border-[#FEDC97] bg-[#FFF4DE]'
+																: 'border-transparent bg-[#BED4C5]'
 														}`}
 													>
 														<div className="mb-3 flex items-center gap-3 text-sm font-semibold text-[#0E1D2D]">
@@ -374,25 +393,41 @@ function GenerateQuiz() {
 															<input
 																value={question.text}
 																onChange={(event) =>
-																	handleQuestionChange(section.id, question.id, event.target.value)
+																	handleQuestionChange(
+																		section.id,
+																		question.id,
+																		event.target.value,
+																	)
 																}
 																className="w-full bg-transparent text-sm font-semibold text-[#0E1D2D] outline-none"
 															/>
 														</div>
 
 														<div className="grid gap-2 text-sm text-[#0E1D2D] md:grid-cols-2">
-															{Object.entries(question.options).map(([key, value]) => (
-																<label key={key} className="flex items-center gap-2 rounded-xl bg-[#FFF4DE] px-3 py-2">
-																	<span className="w-5 text-xs font-semibold">{key}.</span>
-																	<input
-																		value={value}
-																		onChange={(event) =>
-																			handleOptionChange(section.id, question.id, key, event.target.value)
-																		}
-																		className="w-full bg-transparent text-sm outline-none"
-																	/>
-																</label>
-															))}
+															{Object.entries(question.options).map(
+																([key, value]) => (
+																	<label
+																		key={key}
+																		className="flex items-center gap-2 rounded-xl bg-[#FFF4DE] px-3 py-2"
+																	>
+																		<span className="w-5 text-xs font-semibold">
+																			{key}.
+																		</span>
+																		<input
+																			value={value}
+																			onChange={(event) =>
+																				handleOptionChange(
+																					section.id,
+																					question.id,
+																					key,
+																					event.target.value,
+																				)
+																			}
+																			className="w-full bg-transparent text-sm outline-none"
+																		/>
+																	</label>
+																),
+															)}
 														</div>
 													</div>
 												)
@@ -410,12 +445,12 @@ function GenerateQuiz() {
 							onClick={handleAddQuestion}
 							className="rounded-full bg-[#FEDC97] px-5 py-2 text-sm font-semibold text-[#0E1D2D]"
 						>
-							Add
+							Add question
 						</button>
 						<button
 							type="button"
 							onClick={handleAddSection}
-							className="rounded-full bg-[#BED4C5] px-5 py-2 text-sm font-semibold text-[#0E1D2D]"
+							className="rounded-full bg-[#FEDC97] px-5 py-2 text-sm font-semibold text-[#0E1D2D]"
 						>
 							Add section
 						</button>

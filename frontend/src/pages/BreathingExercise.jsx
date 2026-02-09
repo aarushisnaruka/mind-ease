@@ -134,19 +134,22 @@ export default function BreathingExercise() {
 					</h1>
 
 					<div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-						{exercises.map((exercise) => (
+						{exercises.map((exercise, index) => (
 							<button
 								key={exercise.id}
 								type="button"
 								onClick={() => setActiveExerciseId(exercise.id)}
-								className="aspect-[5/3] rounded-3xl bg-[#BED4C5] p-8 text-center text-[#0E1D2D] shadow-[0_12px_22px_-18px_rgba(14,29,45,0.7)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-18px_rgba(14,29,45,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A7D0D6]"
+								// Alternating colors based on index: Even = Light Green, Odd = Light Yellow/Mustard
+								className={`aspect-[5/3] rounded-3xl p-8 text-center text-[#0E1D2D] shadow-[0_12px_22px_-18px_rgba(14,29,45,0.7)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-18px_rgba(14,29,45,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A7D0D6] ${
+									index % 2 === 0 ? 'bg-[#BED4C5]' : 'bg-[#FEDC97]'
+								}`}
 							>
 								<div className="flex h-full flex-col items-center justify-center">
 									<p className="text-2xl font-semibold text-[#204060]">
-									{exercise.title}
+										{exercise.title}
 									</p>
 									<p className="mt-4 text-lg text-[#0E1D2D]/70">
-									{exercise.description}
+										{exercise.description}
 									</p>
 								</div>
 							</button>
@@ -169,36 +172,36 @@ export default function BreathingExercise() {
 								<div className="mt-10 flex flex-col items-center gap-8">
 									<div className="relative flex h-64 w-64 items-center justify-center rounded-full bg-[#BED4C5]">
 										<div
-												className="flex h-40 w-40 items-center justify-center rounded-full bg-[#6F9FA5] transition-transform duration-1000 ease-in-out"
+											className="flex h-40 w-40 items-center justify-center rounded-full bg-[#6F9FA5] transition-transform duration-1000 ease-in-out"
 											style={{ transform: `scale(${innerScale})` }}
 										>
-												<span className="text-base font-semibold text-[#FFF4DE]">
+											<span className="text-base font-semibold text-[#FFF4DE]">
 												{currentPhase?.label ?? 'Ready'}
 											</span>
 										</div>
 									</div>
 									<div className="text-center">
-											<p className="text-lg font-semibold text-[#204060]">
+										<p className="text-lg font-semibold text-[#204060]">
 											{currentPhase?.label ?? 'Ready'}
 										</p>
-											<p className="mt-3 text-5xl font-semibold text-[#0E1D2D]">
+										<p className="mt-3 text-5xl font-semibold text-[#0E1D2D]">
 											{secondsLeft || currentPhase?.duration}
 										</p>
 									</div>
 								</div>
 
-									<div className="mt-10 flex items-center justify-between">
+								<div className="mt-10 flex items-center justify-between">
 									<button
 										type="button"
 										onClick={handleReset}
-											className="rounded-2xl bg-[#204060] px-6 py-3.5 text-lg font-semibold text-[#FFF4DE] shadow-[0_12px_20px_-16px_rgba(14,29,45,0.7)]"
+										className="rounded-2xl bg-[#204060] px-6 py-3.5 text-lg font-semibold text-[#FFF4DE] shadow-[0_12px_20px_-16px_rgba(14,29,45,0.7)]"
 									>
 										Reset
 									</button>
 									<button
 										type="button"
 										onClick={() => setIsRunning((current) => !current)}
-											className="rounded-2xl bg-[#28666E] px-6 py-3.5 text-lg font-semibold text-[#FFF4DE] shadow-[0_12px_20px_-16px_rgba(14,29,45,0.7)]"
+										className="rounded-2xl bg-[#28666E] px-6 py-3.5 text-lg font-semibold text-[#FFF4DE] shadow-[0_12px_20px_-16px_rgba(14,29,45,0.7)]"
 									>
 										{isRunning ? 'Pause' : 'Start'}
 									</button>

@@ -32,9 +32,18 @@ export default function DeveloperDashboard() {
 		)
 	}
 
+	const areAllSelected =
+		universities.length > 0 && selectedIds.length === universities.length
+
 	const handleSelectAll = () => {
-		const allIds = universities.map((uni) => uni.id)
-		setSelectedIds(allIds)
+		if (areAllSelected) {
+			// If all are currently selected, clear the selection
+			setSelectedIds([])
+		} else {
+			// Otherwise, select all
+			const allIds = universities.map((uni) => uni.id)
+			setSelectedIds(allIds)
+		}
 	}
 
 	const handleDeleteSelected = () => {
@@ -84,7 +93,8 @@ export default function DeveloperDashboard() {
 						))}
 					</nav>
 				</aside>
-				<main className="flex flex-1 flex-col px-6 py-6">
+				{/* Constrain main height to screen to enable inner scrolling */}
+				<main className="flex h-screen flex-1 flex-col px-6 py-6">
 					<div className="flex flex-wrap items-center justify-between gap-4">
 						<div className="relative w-full max-w-md">
 							<input
@@ -102,21 +112,24 @@ export default function DeveloperDashboard() {
 								onClick={handleSelectAll}
 								className="rounded-2xl bg-[#6F9FA5] px-4 py-2 text-sm font-semibold text-[#FFF4DE] shadow-[0_10px_18px_-16px_rgba(14,29,45,0.7)]"
 							>
-								Select all
+								{areAllSelected ? 'Deselect all' : 'Select all'}
 							</button>
 							<button
 								type="button"
 								onClick={handleDeleteSelected}
 								className="rounded-2xl bg-[#204060] px-4 py-2 text-sm font-semibold text-[#FFF4DE] shadow-[0_10px_18px_-16px_rgba(14,29,45,0.7)]"
 							>
-								Delete selected
+								Delete
 							</button>
 						</div>
 					</div>
 
-					<div className="mt-6 grid flex-1 gap-6">
-						<section className="rounded-3xl bg-[#BED4C5] p-5 shadow-[0_14px_26px_-20px_rgba(14,29,45,0.7)]">
-							<div className="max-h-[320px] space-y-3 overflow-y-auto pr-2 text-sm scroll-shadow">
+					{/* Changed to flex-col to manage vertical space */}
+					<div className="mt-6 flex flex-1 flex-col gap-6 overflow-hidden">
+						{/* List Section: flex-1 allows it to fill available space */}
+						<section className="flex flex-1 flex-col min-h-0 rounded-3xl bg-[#BED4C5] p-5 shadow-[0_14px_26px_-20px_rgba(14,29,45,0.7)]">
+							{/* Removed max-h, added flex-1 for scrolling */}
+							<div className="flex-1 space-y-3 overflow-y-auto pr-2 text-sm scroll-shadow">
 								{filteredUniversities.length === 0 ? (
 									<p className="text-[#0E1D2D]/70">No universities found.</p>
 								) : (

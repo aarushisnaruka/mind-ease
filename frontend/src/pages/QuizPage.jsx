@@ -165,16 +165,10 @@ function QuizPage() {
 					<p className="text-2xl font-semibold text-[#0E1D2D]">🎉 Yay! You have completed the quiz!</p>
 					<button
 						type="button"
-						onClick={() => {
-							setHasStarted(false)
-							setIsComplete(false)
-							setSectionIndex(0)
-							setQuestionIndex(0)
-							setAnswers({})
-						}}
-						className="mt-6 rounded-full bg-[#204060] px-6 py-2 text-sm font-semibold text-[#FFF4DE]"
+						onClick={() => navigate('/student-dashboard')}
+						className="mt-8 w-full rounded-2xl bg-[#204060] py-4 text-lg font-semibold text-[#FFF4DE] transition hover:opacity-90"
 					>
-						Back to start
+						Home
 					</button>
 				</div>
 
@@ -197,7 +191,7 @@ function QuizPage() {
 	}
 
 	return (
-		<div className="min-h-screen bg-[#BED4C5] px-6 py-8 text-[#0E1D2D]">
+		<div className="min-h-screen bg-[#BED4C5] px-4 py-8 text-[#0E1D2D] sm:px-8 lg:px-16">
 			<div className="mx-auto flex max-w-4xl flex-col items-center">
 				{sectionIndex === 0 && questionIndex === 0 ? (
 					<div className="mb-3 flex w-full max-w-2xl justify-start">
@@ -228,7 +222,7 @@ function QuizPage() {
 				</div>
 
 				<p className="text-sm font-semibold text-[#0E1D2D]">
-					Question {questionNumber} / {totalQuestions}
+					Question {questionIndex + 1} / {currentSection.questions.length}
 				</p>
 				<p className="mt-4 max-w-2xl text-center text-base text-[#0E1D2D]">
 					{currentQuestion.text}
