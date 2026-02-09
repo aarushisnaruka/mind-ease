@@ -22,14 +22,10 @@ function InputField({ label, type, placeholder }) {
 export default function UniversityLogin() {
 	const navigate = useNavigate()
 	return (
-		<main className="relative min-h-screen overflow-hidden bg-[#FFF4DE]">
-			{/* Calm layered hills for the university login background. */}
-			<div className="pointer-events-none absolute inset-0">
-				<div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(190,212,197,0.6),_transparent_55%)]" />
-				<div className="absolute -bottom-28 left-0 h-64 w-full rounded-[100%] bg-[#BED4C5]/70" />
-				<div className="absolute -bottom-40 left-0 h-72 w-full rounded-[100%] bg-[#A7D0D6]/70" />
-				<div className="absolute -bottom-52 left-0 h-80 w-full rounded-[100%] bg-[#6F9FA5]/40" />
-			</div>
+		<main className="relative min-h-screen overflow-hidden">
+			{/* Background image */}
+			<div className="fixed inset-0 -z-10 bg-[url('/RoleChoiceImg/role_choice_bg.png')] bg-cover bg-center bg-no-repeat" />
+			<div className="fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-black/5 to-black/10" />
 
 			<div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
 				<div className="w-full max-w-sm rounded-[32px] bg-[#FEDC97] px-6 py-8 shadow-[0_30px_60px_-40px_rgba(14,29,45,0.8)] sm:px-8">

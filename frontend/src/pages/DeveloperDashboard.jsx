@@ -58,7 +58,9 @@ export default function DeveloperDashboard() {
 	}
 
 	return (
-		<div className="min-h-screen bg-[#FFF4DE]">
+		<div className="relative min-h-screen">
+			<div className="fixed inset-0 -z-10 bg-[url('/RoleChoiceImg/role_choice_bg.png')] bg-cover bg-center bg-no-repeat" />
+			<div className="fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-black/5 to-black/10" />
 			<div className="flex min-h-screen">
 				<aside className="flex h-screen w-56 flex-col gap-6 bg-[#204060] px-6 py-8 text-[#FFF4DE]">
 					<nav className="flex flex-col gap-2 text-sm font-medium">
