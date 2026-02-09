@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { GraduationCap } from 'lucide-react'
 
 const navItems = ['Home', 'Profile', 'Contact Us', 'Log out']
 
@@ -19,14 +20,22 @@ const initialAnnouncements = [
 ]
 
 const actionCards = [
-	{ label: 'Preview Quiz', icon: '🧠' },
-	{ label: 'University Stats', icon: '📊' },
+	{ label: 'Preview Quiz', icon: '/Dash/previewQuiz.png' },
+	{ label: 'Institute Stats', icon: '/Dash/stats_s.png' },
 ]
 
 function Sidebar({ onLogout, onProfile, onContact }) {
 	return (
-		<aside className="flex h-screen w-56 flex-col gap-6 bg-[#204060] px-6 py-8 text-[#FFF4DE]">
-			<nav className="flex flex-col gap-2 text-sm font-medium">
+		<aside className="hidden h-screen w-56 flex-col gap-6 bg-[#204060] px-6 py-8 text-[#FFF4DE] lg:flex">
+			<div className="flex flex-col items-center gap-3">
+				<div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FFF4DE] text-[#204060]">
+					<GraduationCap className="h-8 w-8" aria-hidden="true" />
+				</div>
+				<p className="text-xs font-semibold uppercase tracking-[0.2em]">
+					MindEase
+				</p>
+			</div>
+			<nav className="flex flex-col gap-2">
 				{navItems.map((item) => (
 					<button
 						key={item}
@@ -38,7 +47,7 @@ function Sidebar({ onLogout, onProfile, onContact }) {
 									? onProfile
 									: item === 'Contact Us'
 										? onContact
-									: undefined
+										: undefined
 						}
 						className="rounded-xl px-3 py-2 text-left transition hover:bg-[#0E1D2D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFF4DE]"
 					>
@@ -50,29 +59,30 @@ function Sidebar({ onLogout, onProfile, onContact }) {
 	)
 }
 
-function DashboardHeader({ onAnnouncementsClick }) {
+function WelcomeBanner({ onAnnouncementsClick }) {
 	return (
-		<section className="relative overflow-hidden rounded-[28px] bg-[#BED4C5]">
+		<div className="relative h-48 w-full overflow-hidden rounded-3xl shadow-xl md:h-56">
 			<div
-				className="h-36 w-full bg-cover bg-center"
+				className="absolute inset-0 bg-cover bg-center"
 				style={{
-					backgroundImage:
-						"url('/assets/university-dashboard-header.png')",
+					backgroundImage: "url('/Dash/welcome_bg.png')",
 				}}
 			/>
-			<div className="absolute inset-0 bg-[#FFF4DE]/40" />
-			<div className="absolute left-6 top-5">
-				<h1 className="text-2xl font-semibold text-[#0E1D2D]">Welcome...</h1>
+			<div className="absolute inset-0 bg-black/10" />
+			<div className="absolute inset-0 flex items-center justify-start px-8 md:px-10">
+				<h1 className="font-serif text-4xl font-semibold text-[#204060] drop-shadow-lg md:text-6xl">
+					Welcome...
+				</h1>
 			</div>
 			<button
 				type="button"
 				onClick={onAnnouncementsClick}
-				className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#204060] text-[#FFF4DE] shadow-[0_10px_20px_-12px_rgba(14,29,45,0.7)] transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#204060]"
+				className="absolute right-6 top-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#204060] shadow-lg transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FEDC97]"
 				aria-label="Announcements"
 			>
-				<span aria-hidden="true">📣</span>
+				<img src="/Dash/announcements.png" alt="Announcements" className="h-6 w-6" />
 			</button>
-		</section>
+		</div>
 	)
 }
 
@@ -85,12 +95,10 @@ function ActionCard({ label, icon, onClick }) {
 		<button
 			type="button"
 			onClick={onClick ?? (() => console.log(label))}
-			className="flex h-full w-full items-center justify-between gap-4 rounded-3xl bg-[#BED4C5] px-5 py-6 text-[#0E1D2D] shadow-[0_12px_24px_-18px_rgba(14,29,45,0.5)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-18px_rgba(14,29,45,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#204060]"
+			className="flex h-full w-full items-center justify-between gap-4 rounded-3xl bg-[#BED4C5]/80 px-8 py-8 text-[#0E1D2D] shadow-[0_12px_24px_-18px_rgba(14,29,45,0.5)] transition hover:scale-105 hover:shadow-[0_16px_28px_-18px_rgba(14,29,45,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#204060]"
 		>
-			<span className="text-sm font-semibold">{label}</span>
-			<span className="text-3xl" aria-hidden="true">
-				{icon}
-			</span>
+			<span className="text-2xl font-semibold md:text-3xl">{label}</span>
+			<img src={icon} alt="" className="h-28 w-28 md:h-32 md:w-32" aria-hidden="true" />
 		</button>
 	)
 }
@@ -98,21 +106,24 @@ function ActionCard({ label, icon, onClick }) {
 export default function UniversityDashboard() {
 	const navigate = useNavigate()
 	const [isAnnouncementOpen, setIsAnnouncementOpen] = useState(false)
+	const [announcementTitle, setAnnouncementTitle] = useState('')
 	const [announcementText, setAnnouncementText] = useState('')
 	const [announcementItems, setAnnouncementItems] = useState(
 		initialAnnouncements,
 	)
 
 	const handlePostAnnouncement = () => {
-		const trimmed = announcementText.trim()
-		if (!trimmed) return
+		const titleTrimmed = announcementTitle.trim()
+		const bodyTrimmed = announcementText.trim()
+		if (!bodyTrimmed) return
 		setAnnouncementItems((current) => [
 			{
-				title: 'New Announcement',
-				body: trimmed,
+				title: titleTrimmed || 'New Announcement',
+				body: bodyTrimmed,
 			},
 			...current,
 		])
+		setAnnouncementTitle('')
 		setAnnouncementText('')
 	}
 
@@ -128,41 +139,40 @@ export default function UniversityDashboard() {
 				/>
 				<main className="relative flex min-h-screen flex-1 flex-col px-8 py-8">
 					<div className="relative flex flex-1 flex-col">
-						<DashboardHeader
+						<WelcomeBanner
 							onAnnouncementsClick={() => setIsAnnouncementOpen(true)}
 						/>
 
 						<div className="mt-6 flex flex-1">
-							<div className="grid w-full gap-6 lg:grid-cols-[1.1fr_1fr]">
-								<DashboardCard className="bg-[#FEDC97] p-6 text-[#0E1D2D]">
-								<p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#204060]">
+						<div className="grid w-full gap-6 lg:grid-cols-2">
+							<DashboardCard className="bg-[#FEDC97]/80 p-8 text-[#0E1D2D] shadow-2xl backdrop-blur-sm">
+								<p className="text-base font-semibold uppercase tracking-[0.2em] text-[#204060]">
 									Campus Pulse
 								</p>
-								<div className="mt-4 text-5xl font-semibold">60%</div>
-								<p className="mt-4 text-sm leading-relaxed text-[#0E1D2D]/80">
+								<div className="mt-6 text-8xl font-semibold">60%</div>
+								<p className="mt-6 text-base leading-relaxed text-[#0E1D2D]/80">
 									of students feeling down right now — big number! Time for more
 									check-ins?
 								</p>
 							</DashboardCard>
 
-								<div className="grid gap-4">
-									{actionCards.map((card) => (
-										<ActionCard
-											key={card.label}
-											{...card}
-													onClick={
-														card.label === 'University Stats'
-															? () => navigate('/university-stats')
-															: card.label === 'Preview Quiz'
-																? () => navigate('/preview-quiz')
-																: undefined
-													}
-										/>
-									))}
-								</div>
+							<div className="grid gap-6">
+								{actionCards.map((card) => (
+									<ActionCard
+										key={card.label}
+										{...card}
+										onClick={
+											card.label === 'Institute Stats'
+												? () => navigate('/university-stats')
+												: card.label === 'Preview Quiz'
+													? () => navigate('/preview-quiz')
+													: undefined
+										}
+									/>
+								))}
+							</div>
 						</div>
-						</div>
-
+					</div>
 						<div
 							className={`pointer-events-none absolute right-4 top-4 h-[calc(100%-2rem)] w-full origin-top-right rounded-[28px] bg-[#6F9FA5]/70 p-4 transition duration-300 ease-out lg:w-[55%] ${
 								isAnnouncementOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
@@ -171,7 +181,7 @@ export default function UniversityDashboard() {
 						>
 							<div className="pointer-events-auto flex h-full w-full origin-top-right flex-col overflow-hidden rounded-3xl bg-[#BED4C5] p-5 text-[#0E1D2D] shadow-[0_20px_36px_-24px_rgba(14,29,45,0.8)] transition duration-300 ease-out">
 								<div className="flex items-center justify-between">
-									<h2 className="text-sm font-semibold uppercase tracking-[0.2em]">
+									<h2 className="text-base font-semibold uppercase tracking-[0.2em]">
 										Announcements
 									</h2>
 									<button
@@ -182,35 +192,44 @@ export default function UniversityDashboard() {
 										Close
 									</button>
 								</div>
-								<div className="mt-4 flex-1 space-y-3 overflow-auto pr-2 text-xs scroll-shadow">
-									{announcementItems.map((item, index) => (
+								<div className="mt-4 flex-1 space-y-3 overflow-auto pr-2 text-sm scroll-shadow">
+									{announcementItems.map((item) => (
 										<div key={item.title} className="rounded-2xl bg-[#FFF4DE] p-3">
 											<p className="font-semibold text-[#204060]">{item.title}</p>
 											<p className="mt-1 text-[#0E1D2D]/70">{item.body}</p>
 										</div>
 									))}
 								</div>
-								<div className="mt-4 flex items-center gap-2 rounded-2xl bg-[#FFF4DE] p-2">
+								<div className="mt-4 flex flex-col gap-2 rounded-2xl bg-[#FFF4DE] p-2">
 									<input
 										type="text"
-										placeholder="Write an announcement..."
-										value={announcementText}
-										onChange={(event) => setAnnouncementText(event.target.value)}
-										onKeyDown={(event) => {
-											if (event.key === 'Enter') {
-												handlePostAnnouncement()
-											}
-										}}
-										className="w-full bg-transparent px-2 text-xs text-[#0E1D2D] placeholder:text-[#204060]/60 focus:outline-none"
+										placeholder="Announcement title"
+										value={announcementTitle}
+										onChange={(event) => setAnnouncementTitle(event.target.value)}
+										className="w-full bg-transparent px-2 text-sm font-semibold text-[#204060] placeholder:text-[#204060]/60 focus:outline-none"
 									/>
-									<button
-										type="button"
-										onClick={handlePostAnnouncement}
-										className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-[#204060] text-[#FFF4DE] shadow-[0_10px_18px_-12px_rgba(14,29,45,0.7)] transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#204060]"
-										aria-label="Post announcement"
-									>
-										<span aria-hidden="true">📣</span>
-									</button>
+									<div className="flex items-center gap-2">
+										<input
+											type="text"
+											placeholder="Write an announcement..."
+											value={announcementText}
+											onChange={(event) => setAnnouncementText(event.target.value)}
+											onKeyDown={(event) => {
+												if (event.key === 'Enter') {
+													handlePostAnnouncement()
+												}
+											}}
+											className="w-full bg-transparent px-2 text-sm text-[#0E1D2D] placeholder:text-[#204060]/60 focus:outline-none"
+										/>
+										<button
+											type="button"
+											onClick={handlePostAnnouncement}
+											className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-[#204060] text-[#FFF4DE] shadow-[0_10px_18px_-12px_rgba(14,29,45,0.7)] transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#204060]"
+											aria-label="Post announcement"
+										>
+											<span aria-hidden="true">📣</span>
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -222,4 +241,3 @@ export default function UniversityDashboard() {
 		</div>
 	)
 }
-
